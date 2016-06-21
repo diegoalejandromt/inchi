@@ -1,0 +1,6 @@
+.idea
+chembl_21_chemreps.txt.gz
+dictionary.txt
+inchi.iml
+target/
+.DS_Store
