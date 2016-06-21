@@ -11,5 +11,6 @@ The program uses indexing for  both the dictionary entries and the Chembl Ids. T
 
 The time complexity of the Mapper class rankWords method is O(N^2) since it has a nested loop depending on both the size of words in the dictionary, and the size of the compounds database.
 
-
-
+*NOTE*
+=====================
+This solution is incomplete. The lemmatization didn't work quite as expected, and it might be necessary to employ another tecnique for finding the stems of words, given that the input doesn't use any spaces.
