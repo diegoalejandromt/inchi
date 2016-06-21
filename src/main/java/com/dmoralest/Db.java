@@ -1,10 +1,5 @@
 package com.dmoralest;
 
-
-import edu.stanford.nlp.ling.CoreLabel;
-import edu.stanford.nlp.process.CoreLabelTokenFactory;
-import edu.stanford.nlp.process.PTBTokenizer;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -36,6 +31,7 @@ public class Db {
   }
 
   private Map<String, List<Db.Entry>> stems = new HashMap<>();
+  private int lines;
 
   private Db() {
   }
@@ -44,9 +40,12 @@ public class Db {
     return this.stems;
   }
 
+  public int getLines() {
+    return this.lines;
+  }
+
   public static Db readFromFile(String filePath) throws IOException {
     Db db = new Db();
-    Lemmatizer lemmatizer = new Lemmatizer();
 
     try (FileReader reader = new FileReader(filePath);
          BufferedReader bufferedReader = new BufferedReader(reader, 15000);) {
@@ -58,6 +57,7 @@ public class Db {
         line++;
 
         if (line == 1) continue;
+        db.lines++;
 
         String[] args = inputLine.split("\\s+");
 
@@ -71,7 +71,11 @@ public class Db {
 
         for (String code : codes) {
 
-          List<String> lemmas = lemmatizer.lemmatize(code);
+          List<String> lemmas= new ArrayList<>();
+
+          for (int i = 0; i < code.length()-3; i++) {
+            lemmas.add(code.substring(i, Math.min(i+3, code.length())));
+          }
 
           for (String lemma : lemmas) {
             if (db.stems.get(lemma) == null) {

@@ -29,8 +29,13 @@ public class Dictionary {
   }
 
   private Map<Integer, Set<DictionaryWord>> dictWords;
+  private int lines= 0;
 
   private Dictionary() {
+  }
+
+  public int getLines() {
+    return this.lines;
   }
 
   public List<Integer> getDescendingSizes() {
@@ -46,7 +51,7 @@ public class Dictionary {
   public static Dictionary loadDictionary(String filePath) throws IOException {
 
     Map<Integer, Set<DictionaryWord>> lines = new HashMap<Integer, Set<DictionaryWord>>();
-    Lemmatizer lemmatizer= new Lemmatizer();
+    Dictionary dict = new Dictionary();
 
     try (FileReader reader = new FileReader(filePath);
          BufferedReader bufferedReader = new BufferedReader(reader);) {
@@ -54,6 +59,7 @@ public class Dictionary {
       String inputLine;
 
       while ((inputLine = bufferedReader.readLine()) != null) {
+        dict.lines++;
         int length = inputLine.length();
 
         Set<DictionaryWord> words = lines.get(length);
@@ -63,12 +69,12 @@ public class Dictionary {
           lines.put(length, words);
         }
 
-        List<String> lemmas= lemmatizer.lemmatize(inputLine);
+        List<String> lemmas= new ArrayList<>();
+        lemmas.add(inputLine.substring(0, Math.min(3, inputLine.length())));
         words.add(new DictionaryWord(inputLine, lemmas));
       }
     }
 
-    Dictionary dict = new Dictionary();
     dict.dictWords = lines;
 
     return dict;

@@ -6,11 +6,12 @@ java -jar inchi.jar <N>
 where N is the number of entries you wish to display.
 
 *Time complexity.*
-=====================
 The program uses indexing for  both the dictionary entries and the Chembl Ids. This indexing uses lemmatization, a process where the names of each compound is split in its lemmas, or to make it clearer into its stems. Each stem is stored in a HashMap, which values point to the word or chemblId they were exctracted from. This process speeds up the search, since it is not necessary to evaluate all words against all chemblIds in each run.
 
-The time complexity of the Mapper class rankWords method is O(N^2) since it has a nested loop depending on both the size of words in the dictionary, and the size of the compounds database.
+The time complexity of the Mapper class rankWords method is O(logN). The ratio given by the test shows a constant number which neither converges to zero or infinity. Giving then a good estimate that the algorithm is O(logN).
 
-*NOTE*
-=====================
-This solution is incomplete. The lemmatization didn't work quite as expected, and it might be necessary to employ another tecnique for finding the stems of words, given that the input doesn't use any spaces.
+*Tests*
+In order to run the tests, please run the following command:
+mvn test -DargLine="-Ddictionary.file=<dict.file> -Dchembl.file=<chembl.file>"
+This assumes you have previously installed maven in your system. Please replace <dict.file> with the path to to the dictionary file, and <chembl.file> to the path of the compressed chembl file.
+

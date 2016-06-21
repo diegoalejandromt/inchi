@@ -35,7 +35,7 @@ public class Mapper {
     }
 
     public int compareTo(Mapper.Word o) {
-      return Integer.valueOf(this.word.length()).compareTo(o.word.length());
+      return -Integer.valueOf(this.word.length()).compareTo(o.word.length());
     }
 
     public String toString() {
@@ -88,7 +88,7 @@ public class Mapper {
 
                 if (mapper.wordRank.size() > n) {
                   Mapper.Word last = mapper.wordRank.pollLast();
-                  break;
+                  return mapper;
                 }
               }
             }
